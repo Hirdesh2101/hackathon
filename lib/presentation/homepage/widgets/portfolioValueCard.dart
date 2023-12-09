@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon/domain/usecases/goalUsecase.dart';
 import 'package:hackathon/domain/usecases/userUsecase.dart';
 import 'package:hackathon/presentation/homepage/widgets/defaultGoalsCards.dart';
 import 'package:hackathon/presentation/homepage/widgets/formWidget.dart';
@@ -10,6 +11,8 @@ class PortfolioValueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserUseCase>(context).user;
+    var goals = Provider.of<GoalUseCase>(context).goals;
+    double totalCurrentAmount = goals.fold(0.0, (previousValue, goal) => previousValue + (goal.currentAmount ?? 0.0));
     return Card(
       color: const Color(0xFF1E1E1E),
       child: Column(
@@ -40,7 +43,7 @@ class PortfolioValueCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '₹${user.totalInvesed}',
+                      '₹${totalCurrentAmount}',
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,

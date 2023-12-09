@@ -63,7 +63,8 @@ class SavingGoalsScreen extends StatelessWidget {
                                       double.parse(textFieldController.text),
                                       goalEntity,
                                       context);
-                                  context.go('/home');
+                                      context.pop();
+                                  context.pop();
                                 },
                               ),
                             ],
