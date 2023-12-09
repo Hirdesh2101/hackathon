@@ -44,12 +44,13 @@ class _DefaultGoalsCardsState extends State<DefaultGoalsCards> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SavingGoalsScreen(GoalEntity(
+                        builder: (context) => SavingGoalsScreen(
+                          GoalEntity(
                             name: defaultGoalsList[index].name,
                             endDate: defaultGoalsList[index].endDate,
                             currentAmount: defaultGoalsList[index].currentAmount,
                             targetAmount: defaultGoalsList[index].targetAmount,
-                            startDate: defaultGoalsList[index].startDate)),
+                            startDate: defaultGoalsList[index].startDate),isNew: true,),
                       ),
                     );
                   },

@@ -34,7 +34,7 @@ class GoalsListCard extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SavingGoalsScreen(goals[index]),
+                        builder: (context) => SavingGoalsScreen(goals[index],isNew: false,),
                       ),
                     );
                 },

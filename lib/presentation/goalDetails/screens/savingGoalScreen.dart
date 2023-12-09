@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hackathon/data/models/goal_model.dart';
 import 'package:hackathon/domain/entity/goal_entity.dart';
 import 'package:hackathon/domain/usecases/goalUsecase.dart';
 import 'package:hackathon/presentation/goalDetails/widgets/progressWidget.dart';
@@ -7,12 +8,12 @@ import 'package:provider/provider.dart';
 
 class SavingGoalsScreen extends StatelessWidget {
   final GoalEntity goalEntity;
+  final bool isNew;
 
-  const SavingGoalsScreen(this.goalEntity, {super.key});
+  const SavingGoalsScreen(this.goalEntity, {required this.isNew, super.key});
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,11 +60,22 @@ class SavingGoalsScreen extends StatelessWidget {
                                   final goalProvider = Provider.of<GoalUseCase>(
                                       context,
                                       listen: false);
-                                  goalProvider.updateGoal(
-                                      double.parse(textFieldController.text),
-                                      goalEntity,
-                                      context);
-                                      context.pop();
+                                  if (isNew) {
+                                    goalProvider.addGoal(GoalModel(
+                                        name: goalEntity.name,
+                                        targetAmount: goalEntity.targetAmount,
+                                        currentAmount: double.parse(
+                                            textFieldController.text),
+                                        startDate: goalEntity.startDate,
+                                        reachedMilestones: [],
+                                        endDate: goalEntity.endDate));
+                                  } else {
+                                    goalProvider.updateGoal(
+                                        double.parse(textFieldController.text),
+                                        goalEntity,
+                                        context);
+                                  }
+                                  context.pop();
                                   context.pop();
                                 },
                               ),
