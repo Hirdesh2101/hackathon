@@ -4,12 +4,19 @@ import 'package:equatable/equatable.dart';
 import 'package:hackathon/domain/entity/goal_entity.dart';
 
 class GoalModel extends GoalEntity with EquatableMixin{
+  @override
   final int? id;
+  @override
   final String? name;
+  @override
   final double? targetAmount;
+  @override
   final double? currentAmount;
+  @override
   final DateTime? startDate;
+  @override
   final DateTime? endDate;
+  @override
   final List<double>? reachedMilestones;
 
   GoalModel(

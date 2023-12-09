@@ -6,6 +6,8 @@ import 'package:hackathon/presentation/homepage/widgets/portfolioValueCard.dart'
 import 'package:provider/provider.dart';
 
 class PortfolioOverviewScreen extends StatelessWidget {
+  const PortfolioOverviewScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserUseCase>(context).user;
@@ -27,7 +29,7 @@ class PortfolioOverviewScreen extends StatelessWidget {
                   context.push('/redeem');
                 },
                 child: Container(
-                    padding: EdgeInsets.all(4), // Adjust padding
+                    padding: const EdgeInsets.all(4), // Adjust padding
                     decoration: BoxDecoration(
                       // Adjust decoration according to your design
                       color:
@@ -50,7 +52,7 @@ class PortfolioOverviewScreen extends StatelessWidget {
           ),
         ),
     
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

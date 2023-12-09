@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BalanceCard extends StatelessWidget {
+  const BalanceCard({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return const Card(
       child: Column(
         children: [
           Text('Balance'),

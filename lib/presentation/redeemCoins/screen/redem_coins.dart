@@ -3,15 +3,17 @@ import 'package:hackathon/domain/usecases/userUsecase.dart';
 import 'package:provider/provider.dart';
 
 class RedeemScreen extends StatelessWidget {
+  const RedeemScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserUseCase>(context).user;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Scratch Cards'),
+        title: const Text('Scratch Cards'),
         actions: [
           IconButton(
-            icon: Icon(Icons.help_outline),
+            icon: const Icon(Icons.help_outline),
             onPressed: () {
               // Action for help button
             },
@@ -21,25 +23,25 @@ class RedeemScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 20), // Spacing
-            Text(
+            const SizedBox(height: 20), // Spacing
+            const Text(
               'Reward Balance',
               style: TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 10), // Spacing
+            const SizedBox(height: 10), // Spacing
             Text(
               '₹ ${user.coins}',
-              style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20), // Spacing
+            const SizedBox(height: 20), // Spacing
             ElevatedButton(
               onPressed: () {
                 // Action for redeem button
               },
-              child: Text('REDEEM'),
+              child: const Text('REDEEM'),
             ),
-            SizedBox(height: 10), // Spacing
-            Text(
+            const SizedBox(height: 10), // Spacing
+            const Text(
               'Reward Balance can be redeemed on reaching ₹200',
               style: TextStyle(fontSize: 16),
             ),

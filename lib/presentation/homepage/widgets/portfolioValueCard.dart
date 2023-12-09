@@ -5,24 +5,26 @@ import 'package:hackathon/presentation/homepage/widgets/formWidget.dart';
 import 'package:provider/provider.dart';
 
 class PortfolioValueCard extends StatelessWidget {
+  const PortfolioValueCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserUseCase>(context).user;
     return Card(
-      color: Color(0xFF1E1E1E),
+      color: const Color(0xFF1E1E1E),
       child: Column(
         children: [
-          SizedBox(height: 20), // Spacing between elements
+          const SizedBox(height: 20), // Spacing between elements
           Text(
             'Hi ${user.name}',
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          Text(
+          const Text(
             'Welcome to Fello Hackathon',
             style: TextStyle(color: Colors.white70, fontSize: 18),
           ),
-          SizedBox(height: 20), // Spacing between elements
+          const SizedBox(height: 20), // Spacing between elements
           // Balance card
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,14 +34,14 @@ class PortfolioValueCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
+                    const Text(
                       'Fello Balance',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       '₹${user.totalInvesed}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.bold),
@@ -62,10 +64,10 @@ class PortfolioValueCard extends StatelessWidget {
                         isScrollControlled: true,
                         context: context,
                         builder: (context) {
-                          return MyCustomForm();
+                          return const MyCustomForm();
                         });
                   },
-                  child: Text(
+                  child: const Text(
                     'SAVE',
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
@@ -96,15 +98,15 @@ class InvestmentOptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: color,
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
         title: Text(
           title!,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         subtitle: Text(
           subtitle!,
-          style: TextStyle(color: Colors.white70),
+          style: const TextStyle(color: Colors.white70),
         ),
         // Add trailing or leading icons if needed
       ),

@@ -2,9 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:hackathon/domain/entity/user_entity.dart';
 
 class UserModel extends UserEntity with EquatableMixin{
+  @override
   final int? id;
+  @override
   final String? name;
+  @override
   final int? coins;
+  @override
   final double? totalInvesed;
 
   UserModel(

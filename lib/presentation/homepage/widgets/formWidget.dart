@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hackathon/data/models/goal_model.dart';
-import 'package:hackathon/domain/entity/goal_entity.dart';
 import 'package:hackathon/domain/usecases/goalUsecase.dart';
-import 'package:hackathon/domain/usecases/userUsecase.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class MyCustomForm extends StatefulWidget {
+  const MyCustomForm({super.key});
+
   @override
   MyCustomFormState createState() {
     return MyCustomFormState();
@@ -49,21 +49,21 @@ class MyCustomFormState extends State<MyCustomForm> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Spacer(),
-                    Text(
+                    const Spacer(),
+                    const Text(
                       'Enter Details',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
-                      icon: Icon(Icons.close,
+                      icon: const Icon(Icons.close,
                           color: Colors.white), // Change color as needed
                       onPressed: () =>
                           Navigator.pop(context), // Dismiss the modal sheet
@@ -72,7 +72,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 ),
                 TextFormField(
                   controller: _nameController,
-                  decoration: InputDecoration(labelText: 'Goal Name'),
+                  decoration: const InputDecoration(labelText: 'Goal Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your goal name';
@@ -82,7 +82,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 ),
                 TextFormField(
                   controller: _amountController,
-                  decoration: InputDecoration(labelText: 'Target Amount'),
+                  decoration: const InputDecoration(labelText: 'Target Amount'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -97,7 +97,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 ListTile(
                   title: Text(
                       'Start Date: ${DateFormat('yyyy-MM-dd').format(_startDate)}'),
-                  trailing: Icon(Icons.calendar_today),
+                  trailing: const Icon(Icons.calendar_today),
                   onTap: () {
                     _selectDate(context, true);
                   },
@@ -105,7 +105,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 ListTile(
                   title: Text(
                       'End Date: ${DateFormat('yyyy-MM-dd').format(_endDate)}'),
-                  trailing: Icon(Icons.calendar_today),
+                  trailing: const Icon(Icons.calendar_today),
                   onTap: () {
                     _selectDate(context, false);
                   },
@@ -116,10 +116,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                     if (_formKey.currentState!.validate()) {
                       // Check if end date is at least a month after start date
                       final DateTime oneMonthAfterStart =
-                          _startDate.add(Duration(days: 30));
+                          _startDate.add(const Duration(days: 30));
                       if (_endDate.isBefore(oneMonthAfterStart)) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                               content: Text(
                                   'End date should be at least a month after the start date.')),
                         );
@@ -130,20 +130,20 @@ class MyCustomFormState extends State<MyCustomForm> {
                                 double.parse(_amountController.text.trim()),
                             startDate: _startDate,
                             endDate: _endDate,
-                            reachedMilestones: [],
+                            reachedMilestones: const [],
                             currentAmount: 0);
                         final goalProvider =
                             Provider.of<GoalUseCase>(context, listen: false);
                         goalProvider.addGoal(newGoal);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                               content: Text('Successfully added a new Goal.')),
                         );
                         context.pop();
                       }
                     }
                   },
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
               ],
             ),

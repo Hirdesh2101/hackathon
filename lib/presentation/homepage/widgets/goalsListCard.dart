@@ -4,6 +4,8 @@ import 'package:hackathon/presentation/goalDetails/screens/savingGoalScreen.dart
 import 'package:provider/provider.dart';
 
 class GoalsListCard extends StatelessWidget {
+  const GoalsListCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Build a card for Goals list
@@ -11,14 +13,14 @@ class GoalsListCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Savings',
           style: TextStyle(
               color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
         ),
         //TODO handle empty
         if (goals.isEmpty)
-          Center(child: Padding(
+          const Center(child: Padding(
             padding:  EdgeInsets.only(top:8.0),
             child: Text('No Savings yet Start investing today!'),
           )),
@@ -37,7 +39,7 @@ class GoalsListCard extends StatelessWidget {
                     );
                 },
                 child: ListTile(
-                  leading: Icon(Icons.savings),
+                  leading: const Icon(Icons.savings),
                   title: Text(goals[index].name ?? ''),
                   subtitle: Text(
                       '${goals[index].currentAmount} out of ${goals[index].targetAmount}'),

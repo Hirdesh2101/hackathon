@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class SavingGoalsScreen extends StatelessWidget {
   final GoalEntity goalEntity;
 
-  SavingGoalsScreen(this.goalEntity);
+  const SavingGoalsScreen(this.goalEntity, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,28 +39,28 @@ class SavingGoalsScreen extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           // Create a TextEditingController to retrieve the input
-                          final TextEditingController _textFieldController =
+                          final TextEditingController textFieldController =
                               TextEditingController();
                           return AlertDialog(
-                            title: Text('Enter Investment Amount'),
+                            title: const Text('Enter Investment Amount'),
                             content: TextField(
-                              controller: _textFieldController,
+                              controller: textFieldController,
                               keyboardType: TextInputType
                                   .number, // Use number input type for keypad
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'Enter your Amount',
                               ),
                               // The validator could also be added for form validation
                             ),
                             actions: <Widget>[
                               TextButton(
-                                child: Text('Submit'),
+                                child: const Text('Submit'),
                                 onPressed: () {
                                   final goalProvider = Provider.of<GoalUseCase>(
                                       context,
                                       listen: false);
                                   goalProvider.updateGoal(
-                                      double.parse(_textFieldController.text),
+                                      double.parse(textFieldController.text),
                                       goalEntity,
                                       context);
                                   context.go('/home');
@@ -71,7 +71,7 @@ class SavingGoalsScreen extends StatelessWidget {
                         },
                       );
                     },
-                    child: Column(
+                    child: const Column(
                       children: [
                         Icon(Icons.wallet),
                         SizedBox(height: 2),
@@ -83,7 +83,7 @@ class SavingGoalsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Column(
+                  const Column(
                     children: [
                       Icon(Icons.remove_circle),
                       SizedBox(height: 2),

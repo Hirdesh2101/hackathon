@@ -15,11 +15,11 @@ class AppRouter {
     routes: [
       GoRoute(
         path: '/home',
-        builder: (context, state) => PortfolioOverviewScreen()
+        builder: (context, state) => const PortfolioOverviewScreen()
       ),
        GoRoute(
         path: '/redeem',
-        builder: (context, state) => RedeemScreen()
+        builder: (context, state) => const RedeemScreen()
       ),
     ],
   );

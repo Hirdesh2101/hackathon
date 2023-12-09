@@ -2,12 +2,19 @@ import 'package:equatable/equatable.dart';
 import 'package:hackathon/domain/entity/predefined_goal_entity.dart';
 
 class PredefineGoalModel extends PredefinedGoalEntity with EquatableMixin {
+  @override
   final int? id;
+  @override
   final String? name;
+  @override
   final double? targetAmount;
+  @override
   final double? currentAmount;
+  @override
   final DateTime? startDate;
+  @override
   final DateTime? endDate;
+  @override
   final String? imageURL;
 
   PredefineGoalModel(
