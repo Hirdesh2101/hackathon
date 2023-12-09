@@ -27,9 +27,14 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Future<UserEntity> loadUser() async {
+  
     UserEntity user;
     final db = await DatabaseHelper.instance.database;
-    final currentUser = await db.query('User');
+    var currentUser = await db.query('User');
+    if(currentUser.isEmpty){
+      await initializeUser(db);
+       currentUser = await db.query('User');
+    }
     user = UserModel.fromJson(currentUser[0]);
     return user;
   }
@@ -38,5 +43,16 @@ class UserRepositoryImpl extends UserRepository {
   Future<bool> updateUser(GoalEntity goal) {
     // TODO: implement updateUser
     throw UnimplementedError();
+  }
+   Future<void> initializeUser(var db) async {
+    List<Map> result = await db.query('User', where: 'id = ?', whereArgs: [1]);
+    if (result.isEmpty) {
+      await db.insert('User', {
+        'id': 1,
+        'name': 'Hirdesh',
+        'coins': 0,
+        'totalInvested': 0.0
+      });
+    }
   }
 }

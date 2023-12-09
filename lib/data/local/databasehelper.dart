@@ -36,23 +36,10 @@ class DatabaseHelper {
         targetAmount REAL NOT NULL,
         currentAmount REAL NOT NULL,
         startDate TEXT NOT NULL,
-        endDate TEXT NOT NULL
+        endDate TEXT NOT NULL,
+        reachedMilestones TEXT
       )
     ''');
-    initializeUser();
-  }
-  Future<void> initializeUser() async {
-    final db = await database;
-    List<Map> result = await db.query('User', where: 'id = ?', whereArgs: [1]);
-    if (result.isEmpty) {
-      await db.insert('User', {
-        'id': 1,
-        'name': 'Hirdesh',
-        'coins': 0,
-        'totalInvested': 0.0
-      });
-    }
-    print('user added');
   }
 
   Future close() async {

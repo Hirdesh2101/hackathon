@@ -16,6 +16,7 @@ dependencies:
   path: ^1.8.3
   flutter_local_notifications: ^16.2.0
   get_it: ^7.6.4
+  intl: ^0.17.0
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

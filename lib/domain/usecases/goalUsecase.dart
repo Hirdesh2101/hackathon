@@ -1,8 +1,11 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:hackathon/data/local/databasehelper.dart';
+import 'package:hackathon/data/models/goal_model.dart';
 import 'package:hackathon/domain/entity/goal_entity.dart';
 import 'package:hackathon/domain/repository/goal_repository.dart';
+import 'package:hackathon/domain/usecases/userUsecase.dart';
 import 'package:hackathon/services/notification_service.dart';
+import 'package:provider/provider.dart';
 
 class GoalUseCase with ChangeNotifier {
   final GoalRepository goalRepository;
@@ -20,21 +23,21 @@ class GoalUseCase with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addGoal(GoalEntity goal) async {
+  Future<void> addGoal(GoalModel goal) async {
     bool succuss = await goalRepository.addGoals(goal);
     //TODO CHECK FOR SUCCESS
     loadGoals();
   }
 
-  Future<void> updateGoal(double thisMonthSaving, GoalEntity goal) async {
+  Future<void> updateGoal(
+      double thisMonthSaving, GoalEntity goal, BuildContext context) async {
     // Check for overachievement and milestones
-    handleOverachievement(thisMonthSaving,goal);
-    checkForMilestone(goal);
+    handleOverachievement(thisMonthSaving, goal, context);
+    await checkForMilestone(goal, context);
     bool succuss = await goalRepository.updateGoal(goal);
     //TODO CHECK FOR SUCCESS
     loadGoals();
   }
-
 
   Future<void> deleteGoal(int id) async {
     final db = await DatabaseHelper.instance.database;
@@ -42,73 +45,58 @@ class GoalUseCase with ChangeNotifier {
     loadGoals();
   }
 
-  int calculateExtraCoinsForOverachievement(double thisMonthSaving, double monthlyRequirement) {
+  int calculateExtraCoinsForOverachievement(
+      double thisMonthSaving, double monthlyRequirement) {
     double overachievedAmount = thisMonthSaving - monthlyRequirement;
-    return (overachievedAmount * 0.10).toInt(); // 10% of overachieved amount as coins
+    return (overachievedAmount * 0.10).toInt();
   }
 
-  void handleOverachievement(double thisMonthSaving,  GoalEntity goal) {
+  void handleOverachievement(
+      double thisMonthSaving, GoalEntity goal, BuildContext context) {
     double monthlySavingRequirement = goal.calculateMonthlySaving();
 
     if (thisMonthSaving > monthlySavingRequirement) {
-      // User has overachieved the monthly saving target
-      // Logic to handle overachievement
+      NotificationService().showNotification(goal.id!, "Overachievement!",
+          "Great job! You've saved more than your monthly target for ${goal.name}. Keep up the good work!");
+      int extraCoins = calculateExtraCoinsForOverachievement(
+          thisMonthSaving, monthlySavingRequirement);
 
-      // Example: Notify the user about their overachievement
-      NotificationService().showNotification(
-        goal.id!,
-        "Overachievement!",
-        "Great job! You've saved more than your monthly target for ${goal.name}. Keep up the good work!"
-      );
-
-      // Example: Reward the user with additional coins
-      int extraCoins = calculateExtraCoinsForOverachievement(thisMonthSaving, monthlySavingRequirement);
-      //_user.addCoins(extraCoins);
+      final userProvider = Provider.of<UserUseCase>(context, listen: false);
+      userProvider.addCoins(extraCoins);
 
       notifyListeners();
     }
-     
 
-
-    NotificationService().showNotification(
-      goal.id!, 
-      "Goal Overachieved!", 
-      "Congratulations! You've saved more than your target for ${goal.name}."
-    );
-
-    //goal.targetAmount! *= 1.1; // Increase the goal target by 10%
-     (goal); // Update the goal
+    NotificationService().showNotification(goal.id!, "Goal Overachieved!",
+        "Congratulations! You've saved more than your target for ${goal.name}.");
+    (goal);
   }
 
-  void checkForMilestone(GoalEntity goal) {
+  Future<void> checkForMilestone(GoalEntity goal, BuildContext context) async {
     List<double> milestones = [0.25, 0.50, 0.75];
-    double progress = goal.currentAmount!/ goal.targetAmount!;
+    double progress = goal.currentAmount! / goal.targetAmount!;
 
     for (double milestone in milestones) {
-      if (progress >= milestone && !goal.reachedMilestones!.contains(milestone)) {
-        rewardUserForMilestone(goal, milestone);
-        goal.reachedMilestones!.add(milestone); // Mark milestone as reached
-        //updateGoal(goal);
+      if (progress >= milestone &&
+          !goal.reachedMilestones!.contains(milestone)) {
+        rewardUserForMilestone(goal, milestone, context);
+        goal.reachedMilestones!.add(milestone);
+        await goalRepository.updateGoal(goal);
       }
     }
   }
 
-  void rewardUserForMilestone(GoalEntity goal, double milestone) {
+  void rewardUserForMilestone(
+      GoalEntity goal, double milestone, BuildContext context) {
     int coinsToReward = calculateMilestoneReward(milestone);
-    /// Add provider of userusecase . addCoins
-    //_user.addCoins(coinsToReward);
-
-    NotificationService().showNotification(
-      goal.id!, 
-      "Milestone Reached!", 
-      "You've reached a milestone in ${goal.name} and earned $coinsToReward coins!"
-    );
-
+    final userProvider = Provider.of<UserUseCase>(context, listen: false);
+    userProvider.addCoins(coinsToReward);
+    NotificationService().showNotification(goal.id!, "Milestone Reached!",
+        "You've reached a milestone in ${goal.name} and earned $coinsToReward coins!");
     notifyListeners();
   }
 
   int calculateMilestoneReward(double milestone) {
-    return (milestone * 100).toInt(); // Example calculation
+    return (milestone * 100).toInt();
   }
-
 }

@@ -14,9 +14,9 @@ class GoalRepositoryImpl extends GoalRepository {
   }
 
   @override
-  Future<bool> addGoals(GoalEntity goal) async {
+  Future<bool> addGoals(GoalModel goal) async {
     final db = await DatabaseHelper.instance.database;
-    var succuss = await db.insert('goals', (goal as GoalModel).toJson());
+    var succuss = await db.insert('goals', (goal).toJson());
     if (succuss == 0) return false;
     return true;
   }

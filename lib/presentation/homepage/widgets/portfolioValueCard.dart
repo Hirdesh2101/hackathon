@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon/domain/usecases/userUsecase.dart';
+import 'package:hackathon/presentation/homepage/widgets/formWidget.dart';
 import 'package:provider/provider.dart';
 
 class PortfolioValueCard extends StatelessWidget {
@@ -7,7 +8,7 @@ class PortfolioValueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<UserUseCase>(context).user;
     return Card(
-        color: Color(0xFF1E1E1E),
+      color: Color(0xFF1E1E1E),
       child: Column(
         children: [
           SizedBox(height: 20), // Spacing between elements
@@ -17,7 +18,7 @@ class PortfolioValueCard extends StatelessWidget {
                 color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
           ),
           Text(
-            'Welcome to Fello',
+            'Welcome to Fello Hackathon',
             style: TextStyle(color: Colors.white70, fontSize: 18),
           ),
           SizedBox(height: 20), // Spacing between elements
@@ -36,7 +37,7 @@ class PortfolioValueCard extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      '₹10.0',
+                      '₹${user.totalInvesed}',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -48,16 +49,21 @@ class PortfolioValueCard extends StatelessWidget {
               ),
               ElevatedButton(
                   style: ButtonStyle(
-                      shape:
-                          MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       )),
                       padding:
                           MaterialStateProperty.all(const EdgeInsets.all(10)),
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.white)),
-                  onPressed: () {},
+                      backgroundColor: MaterialStateProperty.all(Colors.white)),
+                  onPressed: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return MyCustomForm();
+                        });
+                  },
                   child: Text(
                     'SAVE',
                     style: TextStyle(

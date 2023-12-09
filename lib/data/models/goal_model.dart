@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:hackathon/domain/entity/goal_entity.dart';
 
@@ -27,7 +29,7 @@ class GoalModel extends GoalEntity with EquatableMixin{
         'currentAmount': currentAmount,
         'startDate': startDate?.toIso8601String(),
         'endDate': endDate?.toIso8601String(),
-        'reachedMilestones': reachedMilestones,
+        'reachedMilestones': jsonEncode(reachedMilestones),
       };
 
   factory GoalModel.fromJson(Map<String, dynamic> json) {
@@ -38,7 +40,7 @@ class GoalModel extends GoalEntity with EquatableMixin{
       currentAmount: json['currentAmount'],
       startDate: DateTime.parse(json['startDate']),
       endDate: DateTime.parse(json['endDate']),
-      reachedMilestones: List.from(json['reachedMilestones']),
+      reachedMilestones: List.from(jsonDecode(json['reachedMilestones'])??[]),
     );
   }
 }
