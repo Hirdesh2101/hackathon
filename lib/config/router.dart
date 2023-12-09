@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hackathon/main.dart';
 import 'package:hackathon/presentation/homepage/screens/portfolioOverviewScreen.dart';
+import 'package:hackathon/presentation/redeemCoins/screen/redem_coins.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
@@ -17,11 +17,9 @@ class AppRouter {
         path: '/home',
         builder: (context, state) => PortfolioOverviewScreen()
       ),
-      GoRoute(
-        path: '/test/:title',
-        builder: (context, state) => MyHomePage(
-          title: state.pathParameters['title']!,
-        ),
+       GoRoute(
+        path: '/redeem',
+        builder: (context, state) => RedeemScreen()
       ),
     ],
   );

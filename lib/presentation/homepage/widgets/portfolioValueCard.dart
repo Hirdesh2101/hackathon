@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon/domain/usecases/userUsecase.dart';
+import 'package:hackathon/presentation/homepage/widgets/defaultGoalsCards.dart';
 import 'package:hackathon/presentation/homepage/widgets/formWidget.dart';
 import 'package:provider/provider.dart';
 
@@ -72,24 +73,7 @@ class PortfolioValueCard extends StatelessWidget {
             ],
           ),
           // Investment options list
-          SizedBox(
-            height: 200,
-            child: ListView(
-              children: <Widget>[
-                InvestmentOptionCard(
-                  title: 'Invest in',
-                  subtitle: 'Gold & 12% P2P',
-                  color: Color(0xFFDAA520), // Gold color
-                ),
-                InvestmentOptionCard(
-                  title: 'Know about',
-                  subtitle: 'Digital Gold',
-                  color: Color(0xFF4A4A4A), // Grey color
-                ),
-                //Add more cards as needed
-              ],
-            ),
-          ),
+          const DefaultGoalsCards(),
         ],
       ),
     );

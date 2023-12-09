@@ -22,9 +22,9 @@ class GoalRepositoryImpl extends GoalRepository {
   }
 
   @override
-  Future<bool> updateGoal(GoalEntity goal) async {
+  Future<bool> updateGoal(GoalModel goal) async {
     final db = await DatabaseHelper.instance.database;
-    var succuss = await db.update('goals', (goal as GoalModel).toJson(),
+    var succuss = await db.update('goals', (goal).toJson(),
         where: 'id = ?', whereArgs: [goal.id]);
     if (succuss == 0) return false;
     return true;

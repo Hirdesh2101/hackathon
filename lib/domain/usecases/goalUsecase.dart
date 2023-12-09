@@ -33,8 +33,15 @@ class GoalUseCase with ChangeNotifier {
       double thisMonthSaving, GoalEntity goal, BuildContext context) async {
     // Check for overachievement and milestones
     handleOverachievement(thisMonthSaving, goal, context);
-    await checkForMilestone(goal, context);
-    bool succuss = await goalRepository.updateGoal(goal);
+    //await checkForMilestone(goal, context);
+    GoalModel goalEntity = GoalModel(
+        id: goal.id,
+        currentAmount: goal.currentAmount! + thisMonthSaving,
+        targetAmount: goal.targetAmount,
+        name: goal.name,
+        startDate: goal.startDate,
+        endDate: goal.endDate);
+    bool succuss = await goalRepository.updateGoal(goalEntity);
     //TODO CHECK FOR SUCCESS
     loadGoals();
   }
@@ -66,13 +73,9 @@ class GoalUseCase with ChangeNotifier {
 
       notifyListeners();
     }
-
-    NotificationService().showNotification(goal.id!, "Goal Overachieved!",
-        "Congratulations! You've saved more than your target for ${goal.name}.");
-    (goal);
   }
 
-  Future<void> checkForMilestone(GoalEntity goal, BuildContext context) async {
+  Future<void> checkForMilestone(GoalModel goal, BuildContext context) async {
     List<double> milestones = [0.25, 0.50, 0.75];
     double progress = goal.currentAmount! / goal.targetAmount!;
 
